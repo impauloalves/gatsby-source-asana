@@ -1,6 +1,6 @@
 {
-  "name": "source-plugin-asana",
-  "version": "1.1.1",
+  "name": "gatsby-source-asana",
+  "version": "1.1.2",
   "description": "Gatsby Source plugin for pulling tasks from Asana projects.",
   "main": "index.js",
   "scripts": {
