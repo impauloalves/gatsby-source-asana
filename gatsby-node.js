@@ -1,10 +1,11 @@
 const fetch = require("node-fetch").default;
 
-async function getTasks(projectId, token) {
+async function getTasks(projectId, fields, token) {
   const tasks = [];
   let offset = "";
   do {
-    let url = `https://app.asana.com/api/1.0/projects/${projectId}/tasks?limit=100&opt_fields=name,followers,assignee,description`;
+    let url = `https://app.asana.com/api/1.0/projects/${projectId}/tasks?limit=100`;
+    if (fields) url += `&opt_fields=${fields.join(',')}`
     if (offset) url += `&offset=${offset}`;
     const { data, next_page } = await (
       await fetch(url, {
@@ -25,15 +26,14 @@ exports.sourceNodes = async ({
   actions,
   createContentDigest,
   createNodeId,
-}, {apiToken, projectId}) => {
+}, {apiToken, projectId, fields}) => {
   // Arbitrary node type constant
   const ITEM_TYPE = "Task";
 
   // Get tasks
-  const tasks = await getTasks(projectId, apiToken);
-  // Convert raw tasks results to nodes
+  const tasks = await getTasks(projectId, fields, apiToken);
+  // Convert raw book results to nodes
   for (task of tasks) {
-    console.log("task", task);
     actions.createNode({
       id: createNodeId(`${ITEM_TYPE}-${task.gid}`),
       ...task,
