@@ -23,6 +23,6 @@
   "author": "Paulo Alves <impauloalves@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.27.2"
+    "axios": "^1.6.0"
   }
 }
